@@ -1,5 +1,5 @@
 (function() {
-  var Backbone, colors, helpers, mongodict, _;
+  var Backbone, colors, helpers, _;
   _ = require('underscore');
   Backbone = require('backbone4000');
   helpers = require('helpers');
@@ -18,38 +18,34 @@
       }
     }
   });
-  mongodict = {
-    string: {
-      $type: 2
-    },
-    boolean: {
-      $type: 8
-    },
-    number: {
-      $type: 1
-    },
-    exists: {
-      $exists: true
-    }
-  };
   exports.Validator.prototype.mongo = function() {
-    var expression, name;
-    name = this.name();
-    switch (name) {
+    switch (this.name()) {
       case 'children':
         return helpers.hashmap(this.args[0], function(value, key) {
           var x;
           x = new exports.Validator(value);
           return x.mongo();
         });
+      case 'number':
+        return {
+          '$type': 1
+        };
+      case 'string':
+        return {
+          '$type': 2
+        };
+      case 'boolean':
+        return {
+          '$type': 8
+        };
+      case 'exists':
+        return {
+          '$exists': true
+        };
       case 'is':
         return this.args[0];
       default:
-        if (expression = mongodict[name]) {
-          return expression;
-        } else {
-          return "dunno (" + name + ")";
-        }
+        return "dunno (" + name + ")";
     }
   };
 }).call(this);

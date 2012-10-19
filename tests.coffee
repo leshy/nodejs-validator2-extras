@@ -10,10 +10,8 @@ exports.validatedmodel = (test) ->
         test.done()
 
 exports.mongo = (test) ->
-    x = new v.Validator({ bla: 'string', k: 'number', a: 3 })
-    console.log('mongo:',x.mongo())
+    mongo = new v.Validator({ bla: 'string', k: 'number', a: 3 }).mongo()
+    test.deepEqual { bla: { '$type': 2 }, k: { '$type': 1 }, a: 3 }, mongo
+    console.log(mongo)
     test.done()
 
-
-exports.test = (test) ->
-    v.test()

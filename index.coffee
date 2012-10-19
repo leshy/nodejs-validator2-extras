@@ -14,23 +14,13 @@ _.map require('validator2'), (value,property) -> exports[property] = value
 exports.ValidatedModel = Backbone.Model.extend4000
     initialize: -> if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid"
 
-
-
-
-mongodict =
-    string: { $type: 2 }
-    boolean: { $type: 8 }
-    number: { $type : 1 }
-    exists: { $exists: true }
-    
-    
+# method that can partially translate a validator to mongodb query
 exports.Validator::mongo = ->
-    name = @name()
-
-    switch name
+    switch @name()
         when 'children' then helpers.hashmap @args[0], (value, key) -> x = new exports.Validator(value);x.mongo()
+        when 'number' then { '$type': 1 }
+        when 'string' then { '$type': 2 }
+        when 'boolean' then {'$type': 8 }
+        when 'exists' then { '$exists': true }
         when 'is' then @args[0]
-        else
-            if expression = mongodict[name] then expression else "dunno (#{ name })"
-    
-
+        else "dunno (#{ name })"
