@@ -1,5 +1,6 @@
 (function() {
   var Backbone, colors, helpers, _;
+  var __slice = Array.prototype.slice;
   _ = require('underscore');
   Backbone = require('backbone4000');
   helpers = require('helpers');
@@ -19,7 +20,7 @@
     }
   });
   exports.Validator.prototype.mongo = function() {
-    switch (this.name()) {
+    switch (this.name().toLowerCase()) {
       case 'children':
         return helpers.hashmap(this.args[0], function(value, key) {
           var x;
@@ -47,5 +48,28 @@
       default:
         return "dunno (" + name + ")";
     }
+  };
+  exports.Select = function() {
+    var args, chew, target;
+    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    if (args.length < 3 || !args.length % 2) {
+      throw "wrong number of arguments";
+    }
+    target = args.shift();
+    chew = function() {
+      var callback, pattern;
+      if (args.length) {
+        pattern = exports.v(args.shift());
+        callback = args.shift();
+        return pattern.feed(target, function(err, data) {
+          if (!err) {
+            return callback(data, chew);
+          } else {
+            return chew();
+          }
+        });
+      }
+    };
+    return chew();
   };
 }).call(this);

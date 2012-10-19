@@ -16,7 +16,7 @@ exports.ValidatedModel = Backbone.Model.extend4000
 
 # method that can partially compile a validator to mongodb query
 exports.Validator::mongo = ->
-    switch @name()
+    switch @name().toLowerCase()
         when 'children' then helpers.hashmap @args[0], (value, key) -> x = new exports.Validator(value);x.mongo()
         when 'number' then { '$type': 1 }
         when 'string' then { '$type': 2 }
@@ -24,3 +24,11 @@ exports.Validator::mongo = ->
         when 'exists' then { '$exists': true }
         when 'is' then @args[0]
         else "dunno (#{ name })"
+
+exports.Select = (args...) ->
+    if args.length < 3 or not args.length % 2 then throw "wrong number of arguments"
+    target = args.shift()
+    chew = -> if args.length
+        pattern = exports.v args.shift(); callback = args.shift(); pattern.feed target, (err,data) -> if not err then callback data, chew else chew()
+    chew()
+    
