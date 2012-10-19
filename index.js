@@ -2,14 +2,14 @@
   var Backbone, _;
   _ = require('underscore');
   Backbone = require('backbone4000');
-  _.map(require('validator'), function(value, property) {
+  _.map(require('validator2'), function(value, property) {
     return exports[property] = value;
   });
   exports.ValidatedModel = Backbone.Model.extend4000({
     initialize: function() {
-      var validator;
-      if (validator = this.get('validator')) {
-        return new exports.Validator(validator).feed(this.attributes, function(err, data) {
+      if (this.validator) {
+        return new exports.Validator(this.validator).feed(this.attributes, function(err, data) {
+          console.log(err, data);
           if (err != null) {
             throw err;
           }
