@@ -12,7 +12,14 @@ _.map require('validator2'), (value,property) -> exports[property] = value
 # feed call in this case should BLOCK. at least on the level of this object's init because we
 # don't want other subclassed initialize functions to be called until verification is complete
 exports.ValidatedModel = Backbone.Model.extend4000
-    initialize: -> if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid"
+    initialize: ->
+
+        # used to validate local object attributes upon initialization
+        if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid"
+
+        # used to validate a superclass of a mixin
+        if @superValidator then new exports.Validator(@superValidator).feed @constructor.__super__, (err,data) -> if err? then throw "Mixin super validator failed"
+
 
 # method that can partially compile a validator to mongodb query
 exports.Validator::mongo = ->
@@ -32,3 +39,5 @@ exports.Select = (args...) ->
         pattern = exports.v args.shift(); callback = args.shift(); pattern.feed target, (err,data) -> if not err then callback data, chew else chew()
     chew()
     
+
+

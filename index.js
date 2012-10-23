@@ -11,9 +11,16 @@
   exports.ValidatedModel = Backbone.Model.extend4000({
     initialize: function() {
       if (this.validator) {
-        return new exports.Validator(this.validator).feed(this.attributes, function(err, data) {
+        new exports.Validator(this.validator).feed(this.attributes, function(err, data) {
           if (err != null) {
             throw "model init invalid";
+          }
+        });
+      }
+      if (this.superValidator) {
+        return new exports.Validator(this.superValidator).feed(this.constructor.__super__, function(err, data) {
+          if (err != null) {
+            throw "Mixin super validator failed";
           }
         });
       }
