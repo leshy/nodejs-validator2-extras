@@ -15,7 +15,7 @@ exports.ValidatedModel = Backbone.Model.extend4000
     initialize: ->
 
         # used to validate local object attributes upon initialization
-        if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid"
+        if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid: " + err
 
         # used to validate a superclass of a mixin
         if @superValidator then new exports.Validator(@superValidator).feed @constructor.__super__, (err,data) -> if err? then throw "Mixin super validator failed"
