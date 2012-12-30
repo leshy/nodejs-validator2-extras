@@ -13,7 +13,7 @@
       if (this.validator) {
         new exports.Validator(this.validator).feed(this.attributes, function(err, data) {
           if (err != null) {
-            throw "model init invalid";
+            throw "model init invalid: " + err;
           }
         });
       }
