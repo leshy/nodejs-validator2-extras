@@ -35,3 +35,26 @@ exports.AccessorModel = (test) ->
         x.bla(33)
     catch err
         test.done()
+
+exports.ValidatedFunction = (test) ->
+    cnt = 0
+    
+    X = Backbone.Model.extend4000
+        testf: v.Validated({ 0: 'Number', 1: 'String' }, (n,str,callback) ->
+            cnt++
+            callback undefined, [ n, str ])
+
+    x = new X()
+
+    x.testf 3, 'teststring', (err,data) ->
+        if err then test.fail()
+        if not data then test.fail()
+        if cnt isnt 1 then test.fail()
+
+    x.testf 4, 6, (err,data) ->
+        if not err then test.fail()
+        if cnt isnt 1 then test.fail()
+        test.done()
+    
+    
+    

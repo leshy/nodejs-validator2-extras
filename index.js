@@ -1,5 +1,5 @@
 (function() {
-  var Backbone, colors, helpers, _;
+  var Backbone, Validated, colors, helpers, _;
   var __slice = Array.prototype.slice, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   _ = require('underscore');
   Backbone = require('backbone4000');
@@ -26,6 +26,23 @@
       }
     }
   });
+  exports.Validated = Validated = function(validator, targetf) {
+    return function() {
+      var args, callback, self, _i;
+      args = 2 <= arguments.length ? __slice.call(arguments, 0, _i = arguments.length - 1) : (_i = 0, []), callback = arguments[_i++];
+      self = this;
+      if (args.length === 1) {
+        arguments = _.first(args);
+      }
+      return new exports.Validator(validator).feed(args, function(err, data) {
+        if (err) {
+          return callback(err, data);
+        } else {
+          return targetf.apply(self, [].concat(args, callback));
+        }
+      });
+    };
+  };
   exports.Validator.prototype.mongo = function() {
     switch (this.name().toLowerCase()) {
       case 'children':

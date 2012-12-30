@@ -20,6 +20,16 @@ exports.ValidatedModel = Backbone.Model.extend4000
         if @superValidator then new exports.Validator(@superValidator).feed @constructor.__super__, (err,data) -> if err? then throw "Mixin super validator failed"
 
 
+
+# wraps an async function in an arguments validator
+exports.Validated = Validated = (validator, targetf) ->
+    (args..., callback) ->
+        self = @
+        if args.length is 1 then arguments = _.first(args)
+        new exports.Validator(validator).feed args, (err,data) ->
+            if err then callback(err,data) else targetf.apply(self, [].concat(args, callback))
+
+
 # method that can partially compile a validator to mongodb query
 exports.Validator::mongo = ->
     switch @name().toLowerCase()

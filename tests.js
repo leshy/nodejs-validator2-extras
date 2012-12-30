@@ -69,4 +69,38 @@
       return test.done();
     }
   };
+  exports.ValidatedFunction = function(test) {
+    var X, cnt, x;
+    cnt = 0;
+    X = Backbone.Model.extend4000({
+      testf: v.Validated({
+        0: 'Number',
+        1: 'String'
+      }, function(n, str, callback) {
+        cnt++;
+        return callback(void 0, [n, str]);
+      })
+    });
+    x = new X();
+    x.testf(3, 'teststring', function(err, data) {
+      if (err) {
+        test.fail();
+      }
+      if (!data) {
+        test.fail();
+      }
+      if (cnt !== 1) {
+        return test.fail();
+      }
+    });
+    return x.testf(4, 6, function(err, data) {
+      if (!err) {
+        test.fail();
+      }
+      if (cnt !== 1) {
+        test.fail();
+      }
+      return test.done();
+    });
+  };
 }).call(this);
