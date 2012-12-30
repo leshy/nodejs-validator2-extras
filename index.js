@@ -1,6 +1,6 @@
 (function() {
   var Backbone, colors, helpers, _;
-  var __slice = Array.prototype.slice;
+  var __slice = Array.prototype.slice, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   _ = require('underscore');
   Backbone = require('backbone4000');
   helpers = require('helpers');
@@ -78,5 +78,22 @@
       }
     };
     return chew();
+  };
+  exports.MakeAccessors = function() {
+    var accessormodel, accessors, definition;
+    accessors = arguments[0], definition = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    accessormodel = {};
+    _.map(accessors, function(validator, name) {
+      return accessormodel[name] = function(value) {
+        return exports.v(validator).feed(value, __bind(function(err, data) {
+          if (err) {
+            throw "accessor value invalid: " + err;
+          } else {
+            return this.set(name, data);
+          }
+        }, this));
+      };
+    });
+    return accessormodel;
   };
 }).call(this);

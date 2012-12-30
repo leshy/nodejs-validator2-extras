@@ -13,7 +13,6 @@ _.map require('validator2'), (value,property) -> exports[property] = value
 # don't want other subclassed initialize functions to be called until verification is complete
 exports.ValidatedModel = Backbone.Model.extend4000
     initialize: ->
-
         # used to validate local object attributes upon initialization
         if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid"
 
@@ -39,5 +38,12 @@ exports.Select = (args...) ->
         pattern = exports.v args.shift(); callback = args.shift(); pattern.feed target, (err,data) -> if not err then callback data, chew else chew()
     chew()
     
+exports.MakeAccessors = (accessors, definition...) ->
+    accessormodel = {}
+    _.map accessors, (validator,name) ->
+        accessormodel[name] = (value) ->
+            exports.v(validator).feed value, (err,data) => if err then throw "accessor value invalid: " + err else @set name, data
+
+    return accessormodel
 
 

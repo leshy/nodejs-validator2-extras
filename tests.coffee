@@ -15,3 +15,23 @@ exports.mongo = (test) ->
     console.log(mongo)
     test.done()
 
+exports.AccessorModel = (test) ->
+    testmodel = Backbone.Model.extend4000(
+        v.MakeAccessors
+            bla: v.v().boolean()
+            blu: v.v().number()
+        initialize: -> 3 + 3
+        )
+
+    x = new testmodel()
+    x.bla(true)
+    test.equals x.get('bla'), true
+
+    x.bla(false).blu(666)
+    test.equals x.get('bla'), false
+    test.equals x.get('blu'), 666
+    
+    try
+        x.bla(33)
+    catch err
+        test.done()
