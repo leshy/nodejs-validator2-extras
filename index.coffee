@@ -2,7 +2,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone4000'
 helpers = require 'helpers'
-colors = require 'colors'
 
 # inherit validator module
 _.map require('validator2'), (value,property) -> exports[property] = value
@@ -25,7 +24,6 @@ exports.ValidatedModel = Backbone.Model.extend4000
 exports.Validated = Validated = (validator, targetf) ->
     (args..., callback) ->
         self = @
-        if args.length is 1 then arguments = _.first(args)
         new exports.Validator(validator).feed args, (err,data) ->
             if err then callback(err,data) else targetf.apply(self, [].concat(args, callback))
 
@@ -55,5 +53,6 @@ exports.MakeAccessors = (accessors, definition...) ->
             exports.v(validator).feed value, (err,data) => if err then throw "accessor value invalid: " + err else @set name, data
 
     return accessormodel
+
 
 
