@@ -31,7 +31,7 @@ exports.Validated = Validated = (validator, targetf) ->
 # method that can partially compile a validator to mongodb query
 exports.Validator::mongo = ->
     switch @name().toLowerCase()
-        when 'children' then helpers.hashmap @args[0], (value, key) -> x = new exports.Validator(value);x.mongo()
+        when 'children' then helpers.dictMap @args[0], (value, key) -> x = new exports.Validator(value);x.mongo()
         when 'number' then { '$type': 1 }
         when 'string' then { '$type': 2 }
         when 'boolean' then {'$type': 8 }

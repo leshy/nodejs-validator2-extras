@@ -50,7 +50,7 @@
   exports.Validator.prototype.mongo = function() {
     switch (this.name().toLowerCase()) {
       case 'children':
-        return helpers.hashmap(this.args[0], function(value, key) {
+        return helpers.dictMap(this.args[0], function(value, key) {
           var x;
           x = new exports.Validator(value);
           return x.mongo();
