@@ -2,7 +2,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone4000'
 helpers = require 'helpers'
-colors = require 'colors'
 
 # inherit validator module
 _.map require('validator2'), (value,property) -> exports[property] = value
@@ -23,14 +22,13 @@ exports.ValidatedModel = Backbone.Model.extend4000
 exports.Validated = Validated = (validator, targetf) ->
     (args..., callback) ->
         self = @
-        if args.length is 1 then arguments = _.first(args)
         new exports.Validator(validator).feed args, (err,data) ->
             if err then callback(err,data) else targetf.apply(self, [].concat(args, callback))
 
 # method that can partially compile a validator to mongodb query
 exports.Validator::mongo = ->
     switch @name().toLowerCase()
-        when 'children' then helpers.hashmap @args[0], (value, key) -> x = new exports.Validator(value);x.mongo()
+        when 'children' then helpers.dictMap @args[0], (value, key) -> x = new exports.Validator(value);x.mongo()
         when 'number' then { '$type': 1 }
         when 'string' then { '$type': 2 }
         when 'boolean' then {'$type': 8 }
