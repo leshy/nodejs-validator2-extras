@@ -15,11 +15,9 @@ exports.ValidatedModel = Backbone.Model.extend4000
     initialize: ->
         # used to validate local object attributes upon initialization
         if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid: " + err
-
+        
         # used to validate a superclass of a mixin
         if @superValidator then new exports.Validator(@superValidator).feed @constructor.__super__, (err,data) -> if err? then throw "Mixin super validator failed"
-
-
 
 # wraps an async function in an arguments validator
 exports.Validated = Validated = (validator, targetf) ->
@@ -28,7 +26,6 @@ exports.Validated = Validated = (validator, targetf) ->
         if args.length is 1 then arguments = _.first(args)
         new exports.Validator(validator).feed args, (err,data) ->
             if err then callback(err,data) else targetf.apply(self, [].concat(args, callback))
-
 
 # method that can partially compile a validator to mongodb query
 exports.Validator::mongo = ->
@@ -55,5 +52,3 @@ exports.MakeAccessors = (accessors, definition...) ->
             exports.v(validator).feed value, (err,data) => if err then throw "accessor value invalid: " + err else @set name, data
 
     return accessormodel
-
-
