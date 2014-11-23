@@ -2,7 +2,6 @@
     "name": "validator2-extras",
     "version": "0.0.1",
     "description": "validator2 extensions",
-    "private": true,
     "author": {
         "name": "Ivan Nikolic [lesh]",
         "email": "lesh@sysphere.org"
@@ -14,8 +13,5 @@
         "helpers": "git://github.com/leshy/nodejs-helpers.git"
     },
     "main": "index",
-    "engines": {
-        "node": "node >= 0.4.x"
-    }
 }
 
