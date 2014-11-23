@@ -12,6 +12,6 @@
         "validator2": "git://github.com/leshy/nodejs-validator2.git",
         "helpers": "git://github.com/leshy/nodejs-helpers.git"
     },
-    "main": "index",
+    "main": "index"
 }
 
