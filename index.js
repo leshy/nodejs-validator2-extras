@@ -13,7 +13,7 @@
     return exports[property] = value;
   });
 
-  exports.ValidatedModel = Backbone.Model.extend4000({
+  exports.ValidatedModel = exports.validatedModel = Backbone.Model.extend4000({
     initialize: function() {
       if (this.validator) {
         new exports.Validator(this.validator).feed(this.attributes, function(err, data) {

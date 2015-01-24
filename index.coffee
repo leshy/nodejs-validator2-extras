@@ -10,7 +10,7 @@ _.map require('validator2'), (value,property) -> exports[property] = value
 #
 # feed call in this case should BLOCK. at least on the level of this object's init because we
 # don't want other subclassed initialize functions to be called until verification is complete
-exports.ValidatedModel = Backbone.Model.extend4000
+exports.ValidatedModel = exports.validatedModel = Backbone.Model.extend4000
     initialize: ->
         # used to validate local object attributes upon initialization
         if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid: " + err
