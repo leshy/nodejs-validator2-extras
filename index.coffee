@@ -6,17 +6,19 @@ helpers = require 'helpers'
 # inherit validator module
 _.map require('validator2'), (value,property) -> exports[property] = value
 
+
 # backbone model that uses validator on its own attributes (for initialization)
 #
 # feed call in this case should BLOCK. at least on the level of this object's init because we
 # don't want other subclassed initialize functions to be called until verification is complete
 exports.ValidatedModel = exports.validatedModel = Backbone.Model.extend4000
     initialize: ->
-        # used to validate local object attributes upon initialization
-        if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err? then throw "model init invalid: " + err
-        
-        # used to validate a superclass of a mixin
-        if @superValidator then new exports.Validator(@superValidator).feed @constructor.__super__, (err,data) -> if err? then throw "Mixin super validator failed"
+      # used to validate local object attributes upon initialization
+      if @validator then new exports.Validator(@validator).feed @attributes, (err,data) -> if err?
+        throw new Error "model init invalid: " + err
+
+      # used to validate a superclass of a mixin
+      if @superValidator then new exports.Validator(@superValidator).feed @constructor.__super__, (err,data) -> if err? then throw "Mixin super validator failed"
 
 # wraps an async function in an arguments validator
 exports.Validated = Validated = (validator, targetf) ->
