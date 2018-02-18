@@ -2,11 +2,7 @@
 # yarn lockfile v1
 
 
-async@^1.4.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
-
-async@^2.4.1:
+async@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
   dependencies:
@@ -14,10 +10,10 @@ async@^2.4.1:
 
 "backbone4000@git+ssh://git@github.com/leshy/backbone4000.git":
   version "0.0.1"
-  resolved "git+ssh://git@github.com/leshy/backbone4000.git#d4a5b3d94946e5d4c8ed7519ddc24c5f8f84233d"
+  resolved "git+ssh://git@github.com/leshy/backbone4000.git#c64a230b301c5da268967442a435439086bfb839"
   dependencies:
     backbone "^1.1.2"
-    helpers "github:leshy/nodejs-helpers"
+    helpers "git+ssh://git@github.com/leshy/nodejs-helpers.git"
     underscore "^1.8.3"
 
 backbone@^1.1.2:
@@ -28,31 +24,23 @@ backbone@^1.1.2:
 
 "helpers@git+ssh://git@github.com/leshy/nodejs-helpers.git":
   version "1.0.0"
-  uid fc6a6f2d8c604e81b06060b9cd4287f030d64623
-  resolved "git+ssh://git@github.com/leshy/nodejs-helpers.git#fc6a6f2d8c604e81b06060b9cd4287f030d64623"
+  resolved "git+ssh://git@github.com/leshy/nodejs-helpers.git#8a0ee8ce5239e162c2a45f8271f0564a7ef923a7"
   dependencies:
-    async "^1.4.2"
-    underscore "^1.8.3"
-
-"helpers@github:leshy/nodejs-helpers":
-  version "1.0.0"
-  resolved "https://codeload.github.com/leshy/nodejs-helpers/tar.gz/fc6a6f2d8c604e81b06060b9cd4287f030d64623"
-  dependencies:
-    async "^1.4.2"
+    async "^2.6.0"
     underscore "^1.8.3"
 
 lodash@^4.14.0:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
-underscore@1.x, underscore@>=1.8.3, underscore@^1.8.3:
+underscore@>=1.8.3, underscore@^1.8.3:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
 "validator2@git+ssh://git@github.com/leshy/nodejs-validator2.git":
   version "0.0.1"
-  resolved "git+ssh://git@github.com/leshy/nodejs-validator2.git#63052380bad9f555dc571704978c8912bfb14b76"
+  resolved "git+ssh://git@github.com/leshy/nodejs-validator2.git#0775c167240148072d922021d773fbfbf660d4f6"
   dependencies:
-    async "^2.4.1"
+    async "^2.6.0"
     helpers "git+ssh://git@github.com/leshy/nodejs-helpers.git"
-    underscore "1.x"
+    underscore "^1.8.3"
