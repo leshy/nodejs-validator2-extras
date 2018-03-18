@@ -7,10 +7,10 @@
     "email": "lesh@sysphere.org"
   },
   "dependencies": {
-    "backbone4000": "git+ssh://git@github.com/leshy/backbone4000.git",
-    "helpers": "git+ssh://git@github.com/leshy/nodejs-helpers.git",
+    "backbone4000": "git+https://github.com/leshy/backbone4000.git",
+    "helpers": "git+https://github.com/leshy/nodejs-helpers.git",
     "underscore": "^1.8.3",
-    "validator2": "git+ssh://git@github.com/leshy/nodejs-validator2.git"
+    "validator2": "git+https://github.com/leshy/nodejs-validator2.git"
   },
   "repository": {
     "type": "git",
